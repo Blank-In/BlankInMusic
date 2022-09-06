@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/ksw26/Desktop/minecraft/Minecraft Plugin/BlankInMusic 1.12/Paper-1.12.2-b1618.jar"/>
+	<classpathentry kind="lib" path="Paper-1.12.2-b1618.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

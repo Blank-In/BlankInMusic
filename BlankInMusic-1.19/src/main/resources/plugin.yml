@@ -1,0 +1,64 @@
+main: com.gmail.ksw26141.BlankInMusic
+name: BlankInMusic
+version: 15.20210302
+author: Blank_In
+website: https://blog.naver.com/ksw87581
+prefix: BlankInMusic
+api-version: 1.18
+commands:
+  blankinmusic:
+    description: 플러그인의 정상작동을 확인함. 플러그인의 변수를 초기화함.
+    permission: BlankInMusic.blankinmusic
+    permission-message: 작동 테스트 명령어입니다.
+    usage: 플러그인 내부 문제 있음.
+  연주차단:
+    description: BlankInMusic 연주소리 차단 명령어.
+    permission: BlankInMusic.user.연주차단
+    permission-message: 유저 전용 명령어입니다!
+    usage: /<command>
+  악보등록:
+    description: BlankInMusic 악보등록 명령어.
+    permission: BlankInMusic.user.악보등록
+    permission-message: 유저 전용 명령어입니다!
+    usage: /<command>
+  악보연주:
+    description: BlankInMusic 악보연주 명령어.
+    permission: BlankInMusic.user.악보연주
+    permission-message: 유저 전용 명령어입니다!
+    usage: /<command>
+  악보연결:
+    description: BlankInMusic 악보연결 명령어.
+    permission: BlankInMusic.user.악보연결
+    permission-message: 사용 제한 명령어입니다!
+    usage: /<command>
+  지휘자:
+    description: BlankInMusic 지휘자 설정 명령어.
+    permission: BlankInMusic.user.지휘자
+    permission-message: 유저 전용 명령어입니다!
+    usage: /<command> <player>
+  musictag:
+    description: BlankInMusic 악기 태그 명령어.
+    permission: BlankInMusic.op.musictag
+    permission-message: 오피 전용 명령어입니다!
+    usage: /<command> <tag>
+  tagadd:
+    description: BlankInMusic 악기 태그 추가 명령어.
+    permission: BlankInMusic.op.tagadd
+    permission-message: 오피 전용 명령어입니다!
+    usage: /<command> <sound> <tag>
+
+permissions:
+  BlankInMusic.op.*:
+    description: 오피 전용 명령어 모음
+    default: op
+    children:
+      BlankInMusic.blankinmusic: true
+      BlankInMusic.op.musictag: true
+      BlankInMusic.op.tagadd: true
+  BlankInMusic.user.*:
+    description: 유저 전용 명령어 모음
+    children:
+      BlankInMusic.user.연주차단: true
+      BlankInMusic.user.악보등록: true
+      BlankInMusic.user.악보연주: true
+      BlankInMusic.user.지휘자: true
