@@ -1,10 +1,10 @@
 main: com.gmail.ksw26141.BlankInMusic
 name: BlankInMusic
-version: 16.20220907
+version: 15.20210302
 author: Blank_In
 website: https://blog.naver.com/ksw87581
 prefix: BlankInMusic
-api-version: 1.19
+api-version: 1.18
 commands:
   blankinmusic:
     description: 플러그인의 정상작동을 확인함. 플러그인의 변수를 초기화함.
