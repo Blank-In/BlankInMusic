@@ -62,7 +62,7 @@ public class BlankInMusic extends JavaPlugin implements Listener {
             sheetList.clear();
             sheetIter.clear();
             followList.clear();
-            sendMessage(sender, PluginTitle + "현재 플러그인 버전 15.20210302 | 변수들이 초기화 되었습니다!");
+            sendMessage(sender, PluginTitle + "현재 플러그인 버전 16.20220907 | 변수들이 초기화 되었습니다!");
             return true;
         } else if (smartMusic(sender, cmd, player)) {
             return true;
