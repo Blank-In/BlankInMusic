@@ -38,7 +38,7 @@ public class MusicTagUtil {
             };
         }
 
-        return new InstrumentSound(itemSound, pitchLevel, semitone);
+        return new InstrumentSound(musicTag, itemSound, pitchLevel, semitone);
     }
 
 }
