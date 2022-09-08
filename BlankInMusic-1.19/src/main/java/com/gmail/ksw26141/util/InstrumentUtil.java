@@ -31,11 +31,12 @@ public class InstrumentUtil {
         } catch (Exception e) {
             return false;
         }
-        if (StringUtils.isBlank(musicTag)) {
+
+        var instrumentSound = MusicTagUtil.musicTagToItemSound(musicTag, instrumentPitch, config);
+        if (StringUtils.isAnyBlank(musicTag, instrumentSound.getItemSound())) {
             return false;
         }
 
-        var instrumentSound = MusicTagUtil.musicTagToItemSound(musicTag, instrumentPitch, config);
         return playInstrumentSound(player, instrumentSound, handItem);
     }
 
