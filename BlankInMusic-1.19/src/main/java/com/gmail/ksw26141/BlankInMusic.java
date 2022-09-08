@@ -4,6 +4,7 @@ import com.gmail.ksw26141.config.SheetMusicConfig;
 import com.gmail.ksw26141.eventListener.PlayerInstrumentInteractHandler;
 import com.gmail.ksw26141.eventListener.PlayerQuitHandler;
 import com.gmail.ksw26141.model.InstrumentPitch;
+import com.gmail.ksw26141.util.InstrumentUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -15,7 +16,6 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,6 @@ import java.util.List;
 
 import static com.gmail.ksw26141.Constants.*;
 import static com.gmail.ksw26141.config.SheetMusicConfig.*;
-import static com.gmail.ksw26141.util.InstrumentUtil.playInstrumentItem;
 
 public class BlankInMusic extends JavaPlugin {
 
@@ -52,16 +51,16 @@ public class BlankInMusic extends JavaPlugin {
 
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] player) {
-        if (cmd.getName().equalsIgnoreCase("blankinmusic")) {//플러그인 재설정 명령어
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if ("blankinmusic".equalsIgnoreCase(command.getName())) {//플러그인 재설정 명령어
             SheetMusicConfig.clearConfig();
             sendMessage(sender, PLUGIN_TITLE + "현재 플러그인 버전 17.20220908 | 변수들이 초기화 되었습니다!");
             return true;
-        } else if (smartMusic(sender, cmd, player)) {
+        } else if (smartMusic(sender, command, args)) {
             return true;
-        } else if (sheetMusic(sender, cmd)) {
+        } else if (sheetMusic(sender, command)) {
             return true;
-        } else if (tagCommands(sender, cmd, player)) {
+        } else if (tagCommands(sender, command, args)) {
             return true;
         }
 
@@ -74,18 +73,18 @@ public class BlankInMusic extends JavaPlugin {
         return Collections.emptyList();
     }
 
-    private boolean tagCommands(CommandSender sender, Command cmd, String[] player) {
-        if (cmd.getName().equalsIgnoreCase("musictag")) {//악기태그 명령어
-            if (player.length > 0) {
+    private boolean tagCommands(CommandSender sender, Command command, String[] args) {
+        if (command.getName().equalsIgnoreCase("musictag")) {//악기태그 명령어
+            if (args.length > 0) {
                 var tag = new StringBuilder();
-                for (int a = 0; a < player.length; ++a) {
-                    tag.append(player[a]);
-                    if (a + 1 != player.length) {
+                for (int index = 0; index < args.length; ++index) {
+                    tag.append(args[index]);
+                    if (index + 1 != args.length) {
                         tag.append(" ");
                     }
                 }
-                var user = getServer().getPlayer(sender.getName());
-                var handItem = user.getInventory().getItemInMainHand();
+                var player = getServer().getPlayer(sender.getName());
+                var handItem = player.getInventory().getItemInMainHand();
                 if (handItem.getType().equals(Material.AIR)) {
                     sender.sendMessage(RED_PREFIX + "손에 아이템을 들어주세요.");
                     return true;
@@ -99,15 +98,15 @@ public class BlankInMusic extends JavaPlugin {
                 return true;
             }
             return false;
-        } else if (cmd.getName().equalsIgnoreCase("tagadd")) {
-            if (player.length < 2) {
+        } else if (command.getName().equalsIgnoreCase("tagadd")) {
+            if (args.length < 2) {
                 return false;
             }
             var tag = new StringBuilder();
-            var sound = player[0];
-            for (int a = 1; a < player.length; ++a) {
-                tag.append(player[a]);
-                if (a + 1 != player.length) {
+            var sound = args[0];
+            for (int index = 1; index < args.length; ++index) {
+                tag.append(args[index]);
+                if (index + 1 != args.length) {
                     tag.append(" ");
                 }
             }
@@ -118,22 +117,22 @@ public class BlankInMusic extends JavaPlugin {
         return false;
     }
 
-    private boolean smartMusic(CommandSender sender, Command cmd, String[] player) {//유저 편의기능 명령어 모음
-        if (cmd.getName().equalsIgnoreCase("연주차단")) {
-            var playerName = sender.getName();
-            if (InstrumentMutePlayers.containsKey(playerName)) {
-                InstrumentMutePlayers.remove(playerName);
+    private boolean smartMusic(CommandSender sender, Command command, String[] args) {//유저 편의기능 명령어 모음
+        if (command.getName().equalsIgnoreCase("연주차단")) {
+            var player = getServer().getPlayer(sender.getName());
+            if (InstrumentMutePlayers.contains(player)) {
+                InstrumentMutePlayers.remove(player);
                 sender.sendMessage(GREEN_PREFIX + "연주 소리 차단이 해제되었습니다.");
             } else {
-                InstrumentMutePlayers.put(playerName, true);
+                InstrumentMutePlayers.add(player);
                 sender.sendMessage(RED_PREFIX + "연주 소리가 차단 되었습니다.");
             }
             return true;
-        } else if (cmd.getName().equalsIgnoreCase("지휘자")) {
-            if (player.length > 1) {
+        } else if (command.getName().equalsIgnoreCase("지휘자")) {
+            if (args.length > 1) {
                 sender.sendMessage(RED_PREFIX + "동시에 연주를 시작할 지휘자의 닉네임을 적어주세요. /지휘자 <닉네임>");
-            } else if (player.length == 1) {
-                if (player[0].equals(sender.getName())) {
+            } else if (args.length == 1) {
+                if (args[0].equals(sender.getName())) {
                     sender.sendMessage(RED_PREFIX + "자기자신을 지휘자로 등록할 수 없습니다.");
                     return true;
                 }
@@ -141,8 +140,8 @@ public class BlankInMusic extends JavaPlugin {
                     sender.sendMessage(RED_PREFIX + "악보를 등록해주세요.");
                     return true;
                 }
-                PlayerFollowing.put(sender.getName(), player[0]);
-                sender.sendMessage(GREEN_PREFIX + player[0] + "님이 지휘자로 등록되었습니다.");
+                PlayerFollowing.put(sender.getName(), args[0]);
+                sender.sendMessage(GREEN_PREFIX + args[0] + "님이 지휘자로 등록되었습니다.");
             } else {
                 PlayerFollowing.remove(sender.getName());
                 sender.sendMessage(RED_PREFIX + "지휘자 등록이 취소되었습니다.");
@@ -152,12 +151,12 @@ public class BlankInMusic extends JavaPlugin {
         return false;
     }
 
-    private boolean sheetMusic(CommandSender sender, Command cmd) { //악보 명령어 모음
+    private boolean sheetMusic(CommandSender sender, Command command) { //악보 명령어 모음
         var item = getServer().getPlayer(sender.getName()).getInventory().getItemInMainHand();
-        if (cmd.getName().equalsIgnoreCase("악보등록")) {
+        if (command.getName().equalsIgnoreCase("악보등록")) {
             sheetEncode(sender, item, new ArrayList<>());
             return true;
-        } else if (cmd.getName().equalsIgnoreCase("악보연결")) {
+        } else if (command.getName().equalsIgnoreCase("악보연결")) {
             try {
                 var list = PlayerSheet.get(sender.getName());
                 if (list != null) {
@@ -167,7 +166,7 @@ public class BlankInMusic extends JavaPlugin {
                 sender.sendMessage(RED_PREFIX + "악보등록을 먼저 해주세요.");
             }
             return true;
-        } else if (cmd.getName().equalsIgnoreCase("악보연주")) {
+        } else if (command.getName().equalsIgnoreCase("악보연주")) {
             if (!PlayerSheet.containsKey(sender.getName())) {
                 sender.sendMessage(RED_PREFIX + "악보를 등록해주세요.");
             } else if (PlayerSheetIndex.get(sender.getName()) != 0) {
@@ -264,7 +263,7 @@ public class BlankInMusic extends JavaPlugin {
                         if (playingPitch.getPitchLevel() < 0) {
                             user.sendRawMessage(ChatColor.RED + "쉼표");
                         } else {
-                            playState = playInstrumentItem(user, playingPitch, user.getInventory().getItemInMainHand(), getConfig());
+                            playState = InstrumentUtil.playInstrumentItem(user, playingPitch, user.getInventory().getItemInMainHand(), getConfig());
                         }
                     }
 
