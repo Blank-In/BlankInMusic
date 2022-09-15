@@ -21,7 +21,7 @@ public class PlayerInstrumentInteractHandler implements Listener {
 
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {//악기 들고 우클릭시 처리
+    private void onPlayerInteract(PlayerInteractEvent event) {//악기 들고 우클릭시 처리
         var player = event.getPlayer();
         var action = event.getAction();
 
