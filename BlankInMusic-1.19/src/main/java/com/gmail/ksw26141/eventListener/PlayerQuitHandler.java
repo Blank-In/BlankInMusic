@@ -10,10 +10,12 @@ public class PlayerQuitHandler implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {//에러방지 메모리 절약 플레이어 나갈 시 데이터 제거
-        InstrumentMutePlayers.remove(event.getPlayer().getName());
-        PlayerSheet.remove(event.getPlayer().getName());
-        PlayerSheetIndex.remove(event.getPlayer().getName());
-        PlayerFollowing.remove(event.getPlayer().getName());
+        var player = event.getPlayer();
+        var uuid = player.getUniqueId();
+        InstrumentMutePlayers.remove(uuid);
+        PlayerSheet.remove(uuid);
+        PlayerSheetIndex.remove(uuid);
+        PlayerFollowing.remove(uuid);
     }
 
 }

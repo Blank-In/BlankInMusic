@@ -44,7 +44,7 @@ public class InstrumentUtil {
      *
      */
     public static boolean playInstrumentSound(Player player, InstrumentSound instrumentSound, ItemStack handItem) {//받아온 정보로 악기 소리를 재생함
-        if (InstrumentMutePlayers.contains(player)) {
+        if (InstrumentMutePlayers.contains(player.getUniqueId())) {
             player.sendRawMessage(RED_PREFIX + "현재 연주 차단 상태입니다.");
             return false;
         }
@@ -68,7 +68,9 @@ public class InstrumentUtil {
         handItem.setItemMeta(itemMeta);
         player.getWorld().playSound(location.add(vector), itemSound, 2, instrumentPitch.getMinecraftPitch());
 
-        for (var mutedPlayer : InstrumentMutePlayers) {
+        for (var mutedPlayerUUID : InstrumentMutePlayers) {
+            // TODO: 성능 개선을 위해 player 근처의 mutedPlayer 만 stopSound 해주는 것이 좋을 것 같다.
+            var mutedPlayer = player.getServer().getPlayer(mutedPlayerUUID);
             if (mutedPlayer != null) {
                 mutedPlayer.stopSound(itemSound);
             }
