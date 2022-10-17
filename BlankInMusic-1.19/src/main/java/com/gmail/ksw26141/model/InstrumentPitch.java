@@ -5,7 +5,6 @@ import lombok.Setter;
 
 public class InstrumentPitch {
 
-    // TODO: 샤프나 플랫이 존재하지 않는 음이지만 반음 조절된 음을 출력해주는게 맞을까?
     private static final String[][] pitchName = {
         /*서서*/{"F♯ 파♯", "G 솔", "A 라", "B 시", "C 도", "D 레", "E 미", "F 파", "G 솔", "A 라", "B 시", "C 도", "D 레", "E 미", "F 파"},
         /*샤프*/{"F♯ 파♯", "G♯ 솔♯", "A♯ 라♯", "B♯ 시♯", "C♯ 도♯", "D♯ 레♯", "E♯ 미♯", "F♯ 파♯", "G♯ 솔♯", "A♯ 라♯", "B♯ 시♯", "C♯ 도♯", "D♯ 레♯", "E♯ 미♯", "F♯ 파♯"},
