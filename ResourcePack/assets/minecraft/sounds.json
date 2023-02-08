@@ -1,0 +1,53 @@
+{
+  "blankmusic.elecguitar": {
+    "sounds": [
+      {
+        "name": "blank_in/music/elecguitar",
+        "volume": 0.7,
+        "attenuation_distance": 5
+      }
+    ]
+  },
+  "blankmusic.piano": {
+    "sounds": [
+      "blank_in/music/piano"
+    ]
+  },
+  "blankmusic.violin": {
+    "sounds": [
+      "blank_in/music/violin"
+    ]
+  },
+ "blankmusic.harp2": {
+    "sounds": [
+      {
+        "name": "blank_in/music/harp2",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+ "blankmusic.harp1": {
+    "sounds": [
+      {
+        "name": "blank_in/music/harp1",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+ "blankmusic.harp-1": {
+    "sounds": [
+      {
+        "name": "blank_in/music/harp-1",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+ "blankmusic.harp-2": {
+    "sounds": [
+      {
+        "name": "blank_in/music/harp-2",
+        "attenuation_distance": 16
+      }
+    ]
+  }
+}

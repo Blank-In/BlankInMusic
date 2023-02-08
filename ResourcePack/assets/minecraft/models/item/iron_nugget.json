@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "item/iron_nugget"
+    },
+    "overrides": [
+	{ "predicate": {"custom_model_data": 100}, "model": "item/blank_in/music/guitar"},
+	{ "predicate": {"custom_model_data": 101}, "model": "item/blank_in/music/handbell"},
+	{ "predicate": {"custom_model_data": 102}, "model": "item/blank_in/music/elecguitar"},
+	{ "predicate": {"custom_model_data": 103}, "model": "item/blank_in/music/launchpad"},
+	{ "predicate": {"custom_model_data": 104}, "model": "item/blank_in/music/drum"},
+	{ "predicate": {"custom_model_data": 105}, "model": "item/blank_in/music/piano"}
+    ]
+}
