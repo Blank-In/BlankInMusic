@@ -72,7 +72,8 @@ public class InstrumentUtil {
     player.getWorld().playSound(location.add(vector), itemSound, 2, instrumentPitch.getMinecraftPitch());
 
     for (var mutedPlayerUUID : InstrumentMutePlayers) {
-      // TODO: 성능 개선을 위해 player 근처의 mutedPlayer 만 stopSound 해주는 것이 좋을 것 같다.
+      // TODO: 대형 서버에서의 심각한 성능저하가 우려된다.
+      //  플레이어가 소리 설정에서 직접 조절 할 수 있도록 연주에 사운드 카테고리 추가 후 기능 제거가 베스트 일 것 같다.
       var mutedPlayer = player.getServer().getPlayer(mutedPlayerUUID);
       if (mutedPlayer != null) {
         mutedPlayer.stopSound(itemSound);

@@ -6,10 +6,14 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
 import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 
 import com.gmail.ksw26141.util.InstrumentUtil;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerInstrumentInteractHandler implements Listener {
 
@@ -24,7 +28,7 @@ public class PlayerInstrumentInteractHandler implements Listener {
 
 
   @EventHandler
-  private void onPlayerInteract(PlayerInteractEvent event) {//악기 들고 우클릭시 처리
+  private void onPlayerInteract(PlayerInteractEvent event) {
     var player = event.getPlayer();
     var action = event.getAction();
 
@@ -35,17 +39,21 @@ public class PlayerInstrumentInteractHandler implements Listener {
       }
     }
 
+    event.setCancelled(instrumentAction(player, action));
+  }
+
+  private boolean instrumentAction(Player player, Action action) {
+    var handItem = new ItemStack(Material.AIR);
+
     if (RIGHT_CLICK_AIR.equals(action) || RIGHT_CLICK_BLOCK.equals(action)) {
-      var handItem = player.getInventory().getItemInMainHand();
-      if (InstrumentUtil.playInstrumentItem(player, handItem, config)) {
-        event.setCancelled(true);
-      }
+      handItem = player.getInventory().getItemInMainHand();
     } else if (LEFT_CLICK_AIR.equals(action) || LEFT_CLICK_BLOCK.equals(action)) {
-      var handItem = player.getInventory().getItemInOffHand();
-      if (InstrumentUtil.playInstrumentItem(player, handItem, config)) {
-        event.setCancelled(true);
-      }
+      handItem = player.getInventory().getItemInOffHand();
+    } else {
+      return false;
     }
+
+    return InstrumentUtil.playInstrumentItem(player, handItem, config);
   }
 
 }
