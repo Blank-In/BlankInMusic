@@ -28,18 +28,19 @@ public class PlayerInstrumentInteractHandler implements Listener {
     var player = event.getPlayer();
     var action = event.getAction();
 
-    if (action.equals(RIGHT_CLICK_AIR) || action.equals(RIGHT_CLICK_BLOCK)) {
-      if (action.equals(RIGHT_CLICK_BLOCK)) {
-        playCheck = !playCheck;
-        if (playCheck) {
-          return;
-        }
+    if (RIGHT_CLICK_BLOCK.equals(action)) {
+      playCheck = !playCheck;
+      if (playCheck) {
+        return;
       }
+    }
+
+    if (RIGHT_CLICK_AIR.equals(action) || RIGHT_CLICK_BLOCK.equals(action)) {
       var handItem = player.getInventory().getItemInMainHand();
       if (InstrumentUtil.playInstrumentItem(player, handItem, config)) {
         event.setCancelled(true);
       }
-    } else if (action.equals(LEFT_CLICK_AIR) || action.equals(LEFT_CLICK_BLOCK)) {
+    } else if (LEFT_CLICK_AIR.equals(action) || LEFT_CLICK_BLOCK.equals(action)) {
       var handItem = player.getInventory().getItemInOffHand();
       if (InstrumentUtil.playInstrumentItem(player, handItem, config)) {
         event.setCancelled(true);

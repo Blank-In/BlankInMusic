@@ -12,13 +12,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerQuitHandler implements Listener {
 
   @EventHandler
-  public void onPlayerQuit(PlayerQuitEvent event) {//에러방지 메모리 절약 플레이어 나갈 시 데이터 제거
-    var player = event.getPlayer();
-    var uuid = player.getUniqueId();
-    InstrumentMutePlayers.remove(uuid);
-    PlayerSheet.remove(uuid);
-    PlayerSheetIndex.remove(uuid);
-    PlayerFollowing.remove(uuid);
+  private void onPlayerQuit(PlayerQuitEvent event) { //메모리 절약
+    var playerUUID = event.getPlayer().getUniqueId();
+    InstrumentMutePlayers.remove(playerUUID);
+    PlayerSheet.remove(playerUUID);
+    PlayerSheetIndex.remove(playerUUID);
+    PlayerFollowing.remove(playerUUID);
   }
 
 }

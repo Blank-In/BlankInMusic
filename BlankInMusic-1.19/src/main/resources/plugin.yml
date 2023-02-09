@@ -39,12 +39,12 @@ commands:
   musictag:
     description: BlankInMusic 악기 태그 명령어.
     permission: BlankInMusic.op.musictag
-    permission-message: 오피 전용 명령어입니다!
+    permission-message: 관리자 전용 명령어입니다!
     usage: /<command> <tag>
   tagadd:
     description: BlankInMusic 악기 태그 추가 명령어.
     permission: BlankInMusic.op.tagadd
-    permission-message: 오피 전용 명령어입니다!
+    permission-message: 관리자 전용 명령어입니다!
     usage: /<command> <sound> <tag>
 
 permissions:

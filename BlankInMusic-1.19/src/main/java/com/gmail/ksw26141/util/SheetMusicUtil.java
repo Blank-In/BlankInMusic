@@ -25,11 +25,11 @@ public class SheetMusicUtil {
 
   private static final BukkitScheduler scheduler = getServer().getScheduler();
 
-  public static boolean sheetEncode(Player user, @Nullable ItemStack item, List<String> encodedPage) {
+  public static boolean sheetEncode(Player player, @Nullable ItemStack item, List<String> encodedPage) {
     if (item != null && (Material.WRITABLE_BOOK.equals(item.getType()) || Material.WRITTEN_BOOK.equals(item.getType()))) {
       var sheet = (BookMeta) item.getItemMeta();
       var book = sheet.getPages();
-      var uuid = user.getUniqueId();
+      var playerUUID = player.getUniqueId();
       for (var page : book) {
         var line = page.replace("§0", "")
             .replace("\n\n", " ")
@@ -45,20 +45,20 @@ public class SheetMusicUtil {
           encodedPage.add(word);
         }
       }
-      PlayerSheet.put(uuid, encodedPage);
-      PlayerSheetIndex.put(uuid, 0);
-      user.sendRawMessage(GREEN_PREFIX + "악보가 등록되었습니다.");
+      PlayerSheet.put(playerUUID, encodedPage);
+      PlayerSheetIndex.put(playerUUID, 0);
+      player.sendRawMessage(GREEN_PREFIX + "악보가 등록되었습니다.");
       return true;
     } else {
-      user.sendMessage(RED_PREFIX + "악보를 손에 들어주세요.");
+      player.sendMessage(RED_PREFIX + "악보를 손에 들어주세요.");
       return false;
     }
   }
 
-  public static void playSheet(Player user, FileConfiguration config, BlankInMusic plugin) {//악보 연주 재귀 함수
-    var uuid = user.getUniqueId();
-    var sheet = PlayerSheet.get(uuid);
-    var index = PlayerSheetIndex.get(uuid);
+  public static void playSheet(Player player, FileConfiguration config, BlankInMusic plugin) {//악보 연주 재귀 함수
+    var playerUUID = player.getUniqueId();
+    var sheet = PlayerSheet.get(playerUUID);
+    var index = PlayerSheetIndex.get(playerUUID);
 
     try {
       var syllable = sheet.get(index);
@@ -80,7 +80,7 @@ public class SheetMusicUtil {
               case '#' -> translatePitch.setSemitone(1); // 샤프 처리
               case 'b' -> translatePitch.setSemitone(2); // 플랫 처리
               case 'F' -> { // F버튼 (양손 교체)
-                PlayerInventory inventory = user.getInventory();
+                PlayerInventory inventory = player.getInventory();
                 ItemStack mainHand = inventory.getItemInMainHand();
                 inventory.setItemInMainHand(inventory.getItemInOffHand());
                 inventory.setItemInOffHand(mainHand);
@@ -88,14 +88,14 @@ public class SheetMusicUtil {
               case 'C' -> { // 슬롯 Change
                 ++syllableIndex;
                 var slotNumber = syllable.charAt(syllableIndex) - '1';
-                user.getInventory().setHeldItemSlot(slotNumber);
+                player.getInventory().setHeldItemSlot(slotNumber);
               }
               case 'L' -> { // 악보 Link
                 ++syllableIndex;
                 var slotNumber = syllable.charAt(syllableIndex) - '1';
-                var nextSheet = user.getInventory().getItem(slotNumber);
-                if (sheetEncode(user, nextSheet, new ArrayList<>())) {
-                  playSheet(user, config, plugin);
+                var nextSheet = player.getInventory().getItem(slotNumber);
+                if (sheetEncode(player, nextSheet, new ArrayList<>())) {
+                  playSheet(player, config, plugin);
                   return; // 현재 음절을 연주하게 되면 PlayerSheetIndex 가 꼬이게 됨.
                 }
               }
@@ -111,37 +111,37 @@ public class SheetMusicUtil {
           var isPlaySucceed = true;
           for (InstrumentPitch playingPitch : pitchList) {
             if (playingPitch.getPitchLevel() < 0) {
-              user.sendRawMessage(ChatColor.RED + "쉼표");
+              player.sendRawMessage(ChatColor.RED + "쉼표");
             } else if (isPlaySucceed) {
-              isPlaySucceed = InstrumentUtil.playInstrumentItem(user, playingPitch,
-                  user.getInventory().getItemInMainHand(), config);
+              isPlaySucceed = InstrumentUtil.playInstrumentItem(player, playingPitch,
+                  player.getInventory().getItemInMainHand(), config);
             }
           }
 
           // 연주 결과 분기
           if (isPlaySucceed) {
             if (index + 2 < sheet.size()) {
-              PlayerSheetIndex.put(uuid, index + 2);
-              playSheet(user, config, plugin);
+              PlayerSheetIndex.put(playerUUID, index + 2);
+              playSheet(player, config, plugin);
             } else {
-              PlayerSheetIndex.put(uuid, 0);
-              user.sendRawMessage(GREEN_PREFIX + "악보 연주가 종료되었습니다.");
+              PlayerSheetIndex.put(playerUUID, 0);
+              player.sendRawMessage(GREEN_PREFIX + "악보 연주가 종료되었습니다.");
             }
           } else {
-            PlayerSheetIndex.put(uuid, 0);
-            user.sendRawMessage(RED_PREFIX + "악기를 손에 들어주세요.");
+            PlayerSheetIndex.put(playerUUID, 0);
+            player.sendRawMessage(RED_PREFIX + "악기를 손에 들어주세요.");
           }
 
         } catch (Exception e) {
-          PlayerSheetIndex.put(uuid, 0);
-          user.sendRawMessage(RED_PREFIX + "악보에서 오류가 발생했습니다! 작성양식을 확인해주세요.");
-          getLogger().warning(user.getName() + "님의 악보에서 오류가 발생했습니다. " + e);
+          PlayerSheetIndex.put(playerUUID, 0);
+          player.sendRawMessage(RED_PREFIX + "악보에서 오류가 발생했습니다! 작성양식을 확인해주세요.");
+          getLogger().warning(player.getName() + "님의 악보에서 오류가 발생했습니다. " + e);
         }
       }, tick);
     } catch (Exception e) {
-      PlayerSheetIndex.put(uuid, 0);
-      user.sendRawMessage(RED_PREFIX + "악보에서 오류가 발생했습니다! 작성양식을 확인해주세요.");
-      getLogger().warning(user.getName() + "님의 악보에서 오류가 발생했습니다. " + e);
+      PlayerSheetIndex.put(playerUUID, 0);
+      player.sendRawMessage(RED_PREFIX + "악보에서 오류가 발생했습니다! 작성양식을 확인해주세요.");
+      getLogger().warning(player.getName() + "님의 악보에서 오류가 발생했습니다. " + e);
     }
   }
 
