@@ -6,13 +6,13 @@ import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerSheet;
 import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerSheetIndex;
 import static org.bukkit.Bukkit.getLogger;
 import static org.bukkit.Bukkit.getServer;
+import static org.bukkit.ChatColor.RED;
 
 import com.gmail.ksw26141.BlankInMusic;
 import com.gmail.ksw26141.model.InstrumentPitch;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -111,7 +111,7 @@ public class SheetMusicUtil {
           var isPlaySucceed = true;
           for (InstrumentPitch playingPitch : pitchList) {
             if (playingPitch.getPitchLevel() < 0) {
-              player.sendRawMessage(ChatColor.RED + "쉼표");
+              player.sendRawMessage(RED + "쉼표");
             } else if (isPlaySucceed) {
               isPlaySucceed = InstrumentUtil.playInstrumentItem(player, playingPitch,
                   player.getInventory().getItemInMainHand(), config);

@@ -3,11 +3,12 @@ package com.gmail.ksw26141.util;
 import static com.gmail.ksw26141.Constants.ITEM_NAME_FIRST;
 import static com.gmail.ksw26141.Constants.RED_PREFIX;
 import static com.gmail.ksw26141.config.SheetMusicConfig.InstrumentMutePlayers;
+import static org.bukkit.ChatColor.BLUE;
+import static org.bukkit.ChatColor.RED;
 
 import com.gmail.ksw26141.model.InstrumentPitch;
 import com.gmail.ksw26141.model.InstrumentSound;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -59,11 +60,11 @@ public class InstrumentUtil {
     var location = player.getLocation().add(0, 1, 0);
     var vector = location.getDirection().multiply(1.5);
 
-    var itemDisplayName = ITEM_NAME_FIRST + musicTag + ChatColor.RED + ' ';
+    var itemDisplayName = ITEM_NAME_FIRST + musicTag + RED + ' ';
     if ("드럼".equals(musicTag)) { // 드럼은 모든 음이 다른 소리를 내도록 되어 있어 예외 처리
       itemDisplayName += itemSound;
     } else {
-      itemDisplayName += instrumentPitch.getPitchLevel() + " " + ChatColor.BLUE + instrumentPitch.getPitchName();
+      itemDisplayName += instrumentPitch.getPitchLevel() + " " + BLUE + instrumentPitch.getPitchName();
     }
 
     itemMeta.setDisplayName(itemDisplayName);

@@ -19,7 +19,6 @@ import com.gmail.ksw26141.eventListener.PlayerQuitHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

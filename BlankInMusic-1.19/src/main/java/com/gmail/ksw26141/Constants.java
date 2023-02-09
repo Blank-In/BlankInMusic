@@ -1,14 +1,20 @@
 package com.gmail.ksw26141;
 
-import org.bukkit.ChatColor;
+import static org.bukkit.ChatColor.AQUA;
+import static org.bukkit.ChatColor.BOLD;
+import static org.bukkit.ChatColor.GRAY;
+import static org.bukkit.ChatColor.GREEN;
+import static org.bukkit.ChatColor.RED;
+import static org.bukkit.ChatColor.WHITE;
+import static org.bukkit.ChatColor.YELLOW;
 
 public class Constants {
 
-  public final static String PLUGIN_TITLE = ChatColor.AQUA + "[" + ChatColor.WHITE + "BlankInMusic" + ChatColor.AQUA + "] " + ChatColor.GRAY;
+  public final static String PLUGIN_TITLE = AQUA + "[" + WHITE + "BlankInMusic" + AQUA + "] " + GRAY;
 
-  public final static String ITEM_NAME_FIRST = ChatColor.WHITE.toString() + ChatColor.BOLD;
+  public final static String ITEM_NAME_FIRST = WHITE.toString() + BOLD;
 
-  public final static String GREEN_PREFIX = ChatColor.GRAY + "[" + ChatColor.GREEN + " ! " + ChatColor.GRAY + "] " + ChatColor.YELLOW;
-  public final static String RED_PREFIX = ChatColor.GRAY + "[" + ChatColor.RED + " ! " + ChatColor.GRAY + "] " + ChatColor.YELLOW;
+  public final static String GREEN_PREFIX = GRAY + "[" + GREEN + " ! " + GRAY + "] " + YELLOW;
+  public final static String RED_PREFIX = GRAY + "[" + RED + " ! " + GRAY + "] " + YELLOW;
 
 }
