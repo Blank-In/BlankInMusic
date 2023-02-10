@@ -9,10 +9,10 @@ public class InstrumentSound {
   private final String itemSound;
   private final InstrumentPitch instrumentPitch;
 
-  public InstrumentSound(String musicTag, String itemSound, int pitchLevel, int semitone) {
+  public InstrumentSound(String musicTag, String itemSound, InstrumentPitch instrumentPitch) {
     this.musicTag = musicTag;
     this.itemSound = itemSound;
-    this.instrumentPitch = new InstrumentPitch(semitone, pitchLevel);
+    this.instrumentPitch = instrumentPitch;
   }
 
 }

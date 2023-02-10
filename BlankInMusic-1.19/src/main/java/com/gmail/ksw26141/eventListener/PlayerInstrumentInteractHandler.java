@@ -39,7 +39,9 @@ public class PlayerInstrumentInteractHandler implements Listener {
       }
     }
 
-    event.setCancelled(instrumentAction(player, action));
+    if (instrumentAction(player, action)) {
+      event.setCancelled(true);
+    }
   }
 
   private boolean instrumentAction(Player player, Action action) {

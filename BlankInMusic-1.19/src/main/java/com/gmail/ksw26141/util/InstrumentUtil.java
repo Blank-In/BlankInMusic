@@ -23,7 +23,8 @@ public class InstrumentUtil {
   }
 
   public static boolean playInstrumentItem(Player player, InstrumentPitch instrumentPitch, ItemStack handItem, FileConfiguration config) {
-    String musicTag;
+    var musicTag = "";
+
     try {
       var itemLore = handItem.getItemMeta().getLore();
       if (itemLore != null && !itemLore.isEmpty()) {
@@ -43,10 +44,7 @@ public class InstrumentUtil {
     return playInstrumentSound(player, instrumentSound, handItem);
   }
 
-  /**
-   * 받아온 정보로 악기 소리를 재생함
-   */
-  public static boolean playInstrumentSound(Player player, InstrumentSound instrumentSound, ItemStack handItem) {
+  private static boolean playInstrumentSound(Player player, InstrumentSound instrumentSound, ItemStack handItem) {
     if (InstrumentMutePlayers.contains(player.getUniqueId())) {
       player.sendRawMessage(RED_PREFIX + "현재 연주 차단 상태입니다.");
       return false;

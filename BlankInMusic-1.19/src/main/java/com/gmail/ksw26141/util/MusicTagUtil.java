@@ -8,17 +8,16 @@ public class MusicTagUtil {
 
   static public InstrumentSound musicTagToItemSound(String musicTag, InstrumentPitch instrumentPitch, FileConfiguration config) {
     var itemSound = "";
-    var pitchLevel = instrumentPitch.getPitchLevel();
-    var semitone = instrumentPitch.getSemitone();
 
     if ("드럼".equals(musicTag)) {
+      var pitchLevel = instrumentPitch.getPitchLevel();
       itemSound = switch (pitchLevel) {
         case 0 -> "block.note_block.snare";
         case 1 -> "block.note_block.hat";
         case 2 -> "block.note_block.basedrum";
         default -> config.isSet("tag.drum." + pitchLevel) ? config.getString("tag.drum." + pitchLevel) : "";
       };
-      pitchLevel = 4; // switch(pitchLevel) 를 먼저 체크해야 하기 때문에 순서 변경에 주의
+      instrumentPitch.setSemitone(4); // switch(pitchLevel) 를 먼저 체크해야 하기 때문에 순서 변경에 주의
     } else {
       itemSound = switch (musicTag) {
         case "베이스" -> "block.note_block.bass";
@@ -38,7 +37,7 @@ public class MusicTagUtil {
       };
     }
 
-    return new InstrumentSound(musicTag, itemSound, pitchLevel, semitone);
+    return new InstrumentSound(musicTag, itemSound, instrumentPitch);
   }
 
 }
