@@ -17,7 +17,7 @@ public class MusicTagUtil {
         case 2 -> "block.note_block.basedrum";
         default -> config.isSet("tag.drum." + pitchLevel) ? config.getString("tag.drum." + pitchLevel) : "";
       };
-      instrumentPitch.setSemitone(4); // switch(pitchLevel) 를 먼저 체크해야 하기 때문에 순서 변경에 주의
+      instrumentPitch.setPitchLevel(4); // switch(pitchLevel) 를 먼저 체크해야 하기 때문에 순서 변경에 주의
     } else {
       itemSound = switch (musicTag) {
         case "베이스" -> "block.note_block.bass";
