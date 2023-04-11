@@ -1,6 +1,7 @@
 package com.gmail.ksw26141.util;
 
 import static com.gmail.ksw26141.Constants.GREEN_PREFIX;
+import static com.gmail.ksw26141.Constants.PLUGIN_TITLE;
 import static com.gmail.ksw26141.Constants.RED_PREFIX;
 import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerSheet;
 import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerSheetIndex;
@@ -12,6 +13,7 @@ import com.gmail.ksw26141.BlankInMusic;
 import com.gmail.ksw26141.model.InstrumentPitch;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
@@ -48,6 +50,7 @@ public class SheetMusicUtil {
     }
     PlayerSheet.put(playerUUID, encodedPage);
     PlayerSheetIndex.put(playerUUID, 0);
+    getLogger().info(PLUGIN_TITLE + player.getName() + " 님이 악보를 등록했습니다. 페이지 수 " + book.size());
     player.sendRawMessage(GREEN_PREFIX + "악보가 등록되었습니다.");
     return true;
   }
@@ -59,10 +62,10 @@ public class SheetMusicUtil {
     final var index = PlayerSheetIndex.get(playerUUID);
 
     var syllable = sheet.get(index);
-    var tick = 0;
+    var tick = new AtomicInteger(0);
     try {
       if (index > 1) {
-        tick = Integer.parseInt(sheet.get(index - 1));
+        tick.set(Integer.parseInt(sheet.get(index - 1)));
       }
     } catch (Exception e) {
       sheetErrorHandle(player, e);
@@ -98,11 +101,13 @@ public class SheetMusicUtil {
             }
             case 'L' -> { // 악보 Link
               ++syllableIndex;
-              var slotNumber = syllable.charAt(syllableIndex) - '1';
-              var nextSheet = player.getInventory().getItem(slotNumber);
-              if (sheetEncode(player, nextSheet, new ArrayList<>())) {
-                playSheet(player, config, plugin);
-                return; // 현재 음절을 연주하게 되면 PlayerSheetIndex 가 꼬이게 됨.
+              if (tick.get() > 0) {
+                var slotNumber = syllable.charAt(syllableIndex) - '1';
+                var nextSheet = player.getInventory().getItem(slotNumber);
+                if (sheetEncode(player, nextSheet, new ArrayList<>())) {
+                  playSheet(player, config, plugin);
+                  return; // 현재 음절을 연주하게 되면 PlayerSheetIndex 가 꼬이게 됨.
+                }
               }
             }
             default -> { //숫자 처리
@@ -139,14 +144,14 @@ public class SheetMusicUtil {
       } catch (Exception e) {
         sheetErrorHandle(player, e);
       }
-    }, tick);
+    }, tick.get());
   }
 
   private static void sheetErrorHandle(Player player, Exception e) {
     var playerUUID = player.getUniqueId();
     PlayerSheetIndex.put(playerUUID, 0);
     player.sendRawMessage(RED_PREFIX + "악보에서 오류가 발생했습니다! 작성양식을 확인해주세요.");
-    getLogger().warning(player.getName() + " 님의 악보에서 오류가 발생했습니다. " + e);
+    getLogger().warning(PLUGIN_TITLE + player.getName() + " 님의 악보에서 오류가 발생했습니다. " + e);
   }
 
 }
