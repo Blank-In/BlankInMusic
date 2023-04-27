@@ -9,6 +9,7 @@ import static org.bukkit.ChatColor.RED;
 import com.gmail.ksw26141.model.InstrumentPitch;
 import com.gmail.ksw26141.model.InstrumentSound;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -67,7 +68,7 @@ public class InstrumentUtil {
 
     itemMeta.setDisplayName(itemDisplayName);
     handItem.setItemMeta(itemMeta);
-    player.getWorld().playSound(location.add(vector), itemSound, 2, instrumentPitch.getMinecraftPitch());
+    player.getWorld().playSound(location.add(vector), itemSound, SoundCategory.RECORDS, 2, instrumentPitch.getMinecraftPitch());
 
     for (var mutedPlayerUUID : InstrumentMutePlayers) {
       // TODO: 대형 서버에서의 심각한 성능저하가 우려된다.

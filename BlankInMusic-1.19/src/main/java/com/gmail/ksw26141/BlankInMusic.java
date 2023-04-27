@@ -53,7 +53,7 @@ public class BlankInMusic extends JavaPlugin {
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
     if ("blankinmusic".equalsIgnoreCase(command.getName())) { //플러그인 재설정
       SheetMusicConfig.clearConfig();
-      sendMessage(sender, PLUGIN_TITLE + "현재 플러그인 버전 19.20221018 | 변수들이 초기화 되었습니다!");
+      sendMessage(sender, PLUGIN_TITLE + "현재 플러그인 버전 21.20230427 | 변수들이 초기화 되었습니다!");
       return true;
     }
 
