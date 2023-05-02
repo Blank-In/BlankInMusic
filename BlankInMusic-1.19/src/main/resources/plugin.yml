@@ -1,8 +1,8 @@
-main: com.gmail.ksw26141.BlankInMusic
+main: blankin.music.BlankInMusic
 name: BlankInMusic
-version: 21.20230427
-author: Blank_In
-website: https://blog.naver.com/ksw87581
+version: 1.21.20230427
+author: Blank-In
+website: https://blog.naver.com/blank-in
 prefix: BlankInMusic
 api-version: 1.19
 commands:

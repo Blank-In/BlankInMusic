@@ -1,7 +1,7 @@
-package com.gmail.ksw26141.util;
+package blankin.music.util;
 
-import com.gmail.ksw26141.model.InstrumentPitch;
-import com.gmail.ksw26141.model.InstrumentSound;
+import blankin.music.model.InstrumentPitch;
+import blankin.music.model.InstrumentSound;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class MusicTagUtil {

@@ -1,13 +1,13 @@
-package com.gmail.ksw26141.util;
+package blankin.music.util;
 
-import static com.gmail.ksw26141.Constants.ITEM_NAME_FIRST;
-import static com.gmail.ksw26141.Constants.RED_PREFIX;
-import static com.gmail.ksw26141.config.SheetMusicConfig.InstrumentMutePlayers;
+import static blankin.music.Constants.ITEM_NAME_FIRST;
+import static blankin.music.Constants.RED_PREFIX;
 import static org.bukkit.ChatColor.BLUE;
 import static org.bukkit.ChatColor.RED;
 
-import com.gmail.ksw26141.model.InstrumentPitch;
-import com.gmail.ksw26141.model.InstrumentSound;
+import blankin.music.config.SheetMusicConfig;
+import blankin.music.model.InstrumentPitch;
+import blankin.music.model.InstrumentSound;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -46,7 +46,7 @@ public class InstrumentUtil {
   }
 
   private static boolean playInstrumentSound(Player player, InstrumentSound instrumentSound, ItemStack handItem) {
-    if (InstrumentMutePlayers.contains(player.getUniqueId())) {
+    if (SheetMusicConfig.InstrumentMutePlayers.contains(player.getUniqueId())) {
       player.sendRawMessage(RED_PREFIX + "현재 연주 차단 상태입니다.");
       return false;
     }
@@ -70,7 +70,7 @@ public class InstrumentUtil {
     handItem.setItemMeta(itemMeta);
     player.getWorld().playSound(location.add(vector), itemSound, SoundCategory.RECORDS, 2, instrumentPitch.getMinecraftPitch());
 
-    for (var mutedPlayerUUID : InstrumentMutePlayers) {
+    for (var mutedPlayerUUID : SheetMusicConfig.InstrumentMutePlayers) {
       // TODO: 대형 서버에서의 심각한 성능저하가 우려된다.
       //  플레이어가 소리 설정에서 직접 조절 할 수 있도록 연주에 사운드 카테고리 추가 후 기능 제거가 베스트 일 것 같다.
       var mutedPlayer = player.getServer().getPlayer(mutedPlayerUUID);

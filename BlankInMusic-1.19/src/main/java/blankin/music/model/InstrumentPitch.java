@@ -1,4 +1,4 @@
-package com.gmail.ksw26141.model;
+package blankin.music.model;
 
 import lombok.Getter;
 import lombok.Setter;

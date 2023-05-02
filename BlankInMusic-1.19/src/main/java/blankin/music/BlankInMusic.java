@@ -1,21 +1,21 @@
-package com.gmail.ksw26141;
+package blankin.music;
 
-import static com.gmail.ksw26141.Constants.GREEN_PREFIX;
-import static com.gmail.ksw26141.Constants.PLUGIN_TITLE;
-import static com.gmail.ksw26141.Constants.RED_PREFIX;
-import static com.gmail.ksw26141.config.SheetMusicConfig.InstrumentMutePlayers;
-import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerFollowing;
-import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerSheet;
-import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerSheetIndex;
-import static com.gmail.ksw26141.util.SheetMusicUtil.playSheet;
-import static com.gmail.ksw26141.util.SheetMusicUtil.sheetEncode;
+import static blankin.music.Constants.GREEN_PREFIX;
+import static blankin.music.Constants.PLUGIN_TITLE;
+import static blankin.music.Constants.RED_PREFIX;
+import static blankin.music.config.SheetMusicConfig.InstrumentMutePlayers;
+import static blankin.music.config.SheetMusicConfig.PlayerFollowing;
+import static blankin.music.config.SheetMusicConfig.PlayerSheet;
+import static blankin.music.config.SheetMusicConfig.PlayerSheetIndex;
+import static blankin.music.util.SheetMusicUtil.playSheet;
+import static blankin.music.util.SheetMusicUtil.sheetEncode;
 import static org.bukkit.ChatColor.BLACK;
 import static org.bukkit.ChatColor.GRAY;
 import static org.bukkit.ChatColor.RED;
 
-import com.gmail.ksw26141.config.SheetMusicConfig;
-import com.gmail.ksw26141.eventListener.PlayerInstrumentInteractHandler;
-import com.gmail.ksw26141.eventListener.PlayerQuitHandler;
+import blankin.music.config.SheetMusicConfig;
+import blankin.music.eventListener.PlayerInstrumentInteractHandler;
+import blankin.music.eventListener.PlayerQuitHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +53,8 @@ public class BlankInMusic extends JavaPlugin {
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
     if ("blankinmusic".equalsIgnoreCase(command.getName())) { //플러그인 재설정
       SheetMusicConfig.clearConfig();
-      sendMessage(sender, PLUGIN_TITLE + "현재 플러그인 버전 21.20230427 | 변수들이 초기화 되었습니다!");
+      // 버저닝 MAJOR.업데이트-횟수.릴리즈-일자
+      sendMessage(sender, PLUGIN_TITLE + "현재 플러그인 버전 1.21.20230427 | 변수들이 초기화 되었습니다!");
       return true;
     }
 

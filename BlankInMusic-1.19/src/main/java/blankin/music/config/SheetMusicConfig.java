@@ -1,4 +1,4 @@
-package com.gmail.ksw26141.config;
+package blankin.music.config;
 
 import java.util.HashMap;
 import java.util.HashSet;

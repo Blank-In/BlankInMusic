@@ -1,16 +1,13 @@
-package com.gmail.ksw26141.util;
+package blankin.music.util;
 
-import static com.gmail.ksw26141.Constants.GREEN_PREFIX;
-import static com.gmail.ksw26141.Constants.PLUGIN_TITLE;
-import static com.gmail.ksw26141.Constants.RED_PREFIX;
-import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerSheet;
-import static com.gmail.ksw26141.config.SheetMusicConfig.PlayerSheetIndex;
 import static org.bukkit.Bukkit.getLogger;
 import static org.bukkit.Bukkit.getServer;
 import static org.bukkit.ChatColor.RED;
 
-import com.gmail.ksw26141.BlankInMusic;
-import com.gmail.ksw26141.model.InstrumentPitch;
+import blankin.music.BlankInMusic;
+import blankin.music.Constants;
+import blankin.music.config.SheetMusicConfig;
+import blankin.music.model.InstrumentPitch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,7 +27,7 @@ public class SheetMusicUtil {
 
   public static boolean sheetEncode(Player player, @Nullable ItemStack item, List<String> encodedPage) {
     if (item == null || (!Material.WRITABLE_BOOK.equals(item.getType()) && !Material.WRITTEN_BOOK.equals(item.getType()))) {
-      player.sendMessage(RED_PREFIX + "악보를 손에 들어주세요.");
+      player.sendMessage(Constants.RED_PREFIX + "악보를 손에 들어주세요.");
       return false;
     }
 
@@ -48,18 +45,18 @@ public class SheetMusicUtil {
         encodedPage.add(word);
       }
     }
-    PlayerSheet.put(playerUUID, encodedPage);
-    PlayerSheetIndex.put(playerUUID, 0);
-    getLogger().info(PLUGIN_TITLE + player.getName() + " 님이 악보를 등록했습니다. 페이지 수 " + book.size());
-    player.sendRawMessage(GREEN_PREFIX + "악보가 등록되었습니다.");
+    SheetMusicConfig.PlayerSheet.put(playerUUID, encodedPage);
+    SheetMusicConfig.PlayerSheetIndex.put(playerUUID, 0);
+    getLogger().info(Constants.PLUGIN_TITLE + player.getName() + " 님이 악보를 등록했습니다. 페이지 수 " + book.size());
+    player.sendRawMessage(Constants.GREEN_PREFIX + "악보가 등록되었습니다.");
     return true;
   }
 
   // TODO: 리팩토링 우선순위 높음
   public static void playSheet(Player player, FileConfiguration config, BlankInMusic plugin) { //악보 연주 재귀
     final var playerUUID = player.getUniqueId();
-    final var sheet = PlayerSheet.get(playerUUID);
-    final var index = PlayerSheetIndex.get(playerUUID);
+    final var sheet = SheetMusicConfig.PlayerSheet.get(playerUUID);
+    final var index = SheetMusicConfig.PlayerSheetIndex.get(playerUUID);
 
     var syllable = sheet.get(index);
     var tick = new AtomicInteger(0);
@@ -131,15 +128,15 @@ public class SheetMusicUtil {
         // 연주 결과 분기
         if (isPlaySucceed) {
           if (index + 2 < sheet.size()) {
-            PlayerSheetIndex.put(playerUUID, index + 2);
+            SheetMusicConfig.PlayerSheetIndex.put(playerUUID, index + 2);
             playSheet(player, config, plugin);
           } else {
-            PlayerSheetIndex.put(playerUUID, 0);
-            player.sendRawMessage(GREEN_PREFIX + "악보 연주가 종료되었습니다.");
+            SheetMusicConfig.PlayerSheetIndex.put(playerUUID, 0);
+            player.sendRawMessage(Constants.GREEN_PREFIX + "악보 연주가 종료되었습니다.");
           }
         } else {
-          PlayerSheetIndex.put(playerUUID, 0);
-          player.sendRawMessage(RED_PREFIX + "악기를 손에 들어주세요.");
+          SheetMusicConfig.PlayerSheetIndex.put(playerUUID, 0);
+          player.sendRawMessage(Constants.RED_PREFIX + "악기를 손에 들어주세요.");
         }
       } catch (Exception e) {
         sheetErrorHandle(player, e);
@@ -149,9 +146,9 @@ public class SheetMusicUtil {
 
   private static void sheetErrorHandle(Player player, Exception e) {
     var playerUUID = player.getUniqueId();
-    PlayerSheetIndex.put(playerUUID, 0);
-    player.sendRawMessage(RED_PREFIX + "악보에서 오류가 발생했습니다! 작성양식을 확인해주세요.");
-    getLogger().warning(PLUGIN_TITLE + player.getName() + " 님의 악보에서 오류가 발생했습니다. " + e);
+    SheetMusicConfig.PlayerSheetIndex.put(playerUUID, 0);
+    player.sendRawMessage(Constants.RED_PREFIX + "악보에서 오류가 발생했습니다! 작성양식을 확인해주세요.");
+    getLogger().warning(Constants.PLUGIN_TITLE + player.getName() + " 님의 악보에서 오류가 발생했습니다. " + e);
   }
 
 }
