@@ -5,9 +5,9 @@ BlankInMusic
     1.19 미만 버전은 더 이상 지원하지 않습니다.
 
 ### 시연 영상
-[악보 작성/연주](https://www.youtube.com/watch?v=A-XUS2XIfXc) || 
+[악보 작성/연주](https://www.youtube.com/watch?v=FzQNpJ9b-Es) || 
 [연주 높낮이 조절](https://www.youtube.com/watch?v=E83QO6JgkP8) || 
-[악기 설정과 연주](https://www.youtube.com/watch?v=FzQNpJ9b-Es)
+[악기 설정과 연주](https://www.youtube.com/watch?v=A-XUS2XIfXc)
 
 이용 규약
 ===
