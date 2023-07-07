@@ -4,6 +4,10 @@ BlankInMusic
     악기 - 등록, 적용, 연주 / 악보 - 작성, 연주, 합주 기능 등을 즐길 수 있는 음악 컨텐츠를 추가해줍니다.
     1.19 미만 버전은 더 이상 지원하지 않습니다.
 
+### 시연 영상
+[악보 작성/연주](https://www.youtube.com/watch?v=A-XUS2XIfXc) || 
+[연주 높낮이 조절](https://www.youtube.com/watch?v=E83QO6JgkP8) || 
+[악기 설정과 연주](https://www.youtube.com/watch?v=FzQNpJ9b-Es)
 
 이용 규약
 ===
