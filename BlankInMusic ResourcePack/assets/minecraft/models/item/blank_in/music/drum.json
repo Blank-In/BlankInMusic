@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "music/drum_set",
-		"1": "music/guitar_iron",
-		"2": "music/guitar_wood",
-		"particle": "music/drum_set"
+		"0": "item/music/drum_set",
+		"1": "item/music/guitar_iron",
+		"2": "item/music/guitar_wood",
+		"particle": "item/music/drum_set"
 	},
 	"elements": [
 		{

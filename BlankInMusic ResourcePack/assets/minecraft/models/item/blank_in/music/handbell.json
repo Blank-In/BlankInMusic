@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "music/bell_gold",
-		"1": "music/guitar_wood",
-		"particle": "music/bell_gold"
+		"0": "item/music/bell_gold",
+		"1": "item/music/guitar_wood",
+		"particle": "item/music/bell_gold"
 	},
 	"elements": [
 		{

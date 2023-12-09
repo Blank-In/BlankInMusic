@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"3": "music/launchpad_buttons",
-		"particle": "music/launchpad_buttons"
+		"3": "item/music/launchpad_buttons",
+		"particle": "item/music/launchpad_buttons"
 	},
 	"elements": [
 		{
